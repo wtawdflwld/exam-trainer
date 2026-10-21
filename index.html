@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#183153">
+  <meta name="description" content="資格試験の問題をオフラインでも繰り返し学べる個人用学習アプリ">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="過去問ノート">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="icon" type="image/png" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>過去問ノート｜資格試験学習</title>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">Q</span>
+        <div><strong>過去問ノート</strong><small>資格試験 学習アプリ</small></div>
+      </div>
+      <span id="networkBadge" class="pill">接続確認中</span>
+    </header>
+
+    <main>
+      <section id="homeView" class="view">
+        <div class="intro">
+          <p class="eyebrow">MY STUDY SPACE</p>
+          <h1>今日も、一問ずつ。</h1>
+          <p>年度・分野で絞り込んで、苦手な問題を繰り返し練習できます。</p>
+        </div>
+
+        <div class="stats" aria-label="学習状況">
+          <div class="stat"><span>登録問題</span><strong id="statAll">—</strong><small>問</small></div>
+          <div class="stat"><span>学習済み</span><strong id="statDone">—</strong><small>問</small></div>
+          <div class="stat"><span>累計正解率</span><strong id="statRate">—</strong><small>%</small></div>
+          <div class="stat"><span>要復習</span><strong id="statWrong">—</strong><small>問</small></div>
+        </div>
+
+        <section class="panel" aria-labelledby="settingsTitle">
+          <div class="section-title"><h2 id="settingsTitle">演習を設定</h2><span class="muted">条件を選んで開始</span></div>
+          <div class="field-grid">
+            <label>資格<select id="filterQual"><option value="">すべて</option></select></label>
+            <label>年度<select id="filterYear"><option value="">すべて</option></select></label>
+            <label>試験回<select id="filterSession"><option value="">すべて</option></select></label>
+            <label>分野<select id="filterCategory"><option value="">すべて</option></select></label>
+            <label>細分野<select id="filterTopic"><option value="">すべて</option></select></label>
+            <label>問題数<select id="questionCount"><option value="10">最大10問</option><option value="20">最大20問</option><option value="all">全問</option></select></label>
+          </div>
+          <fieldset class="fieldset">
+            <legend>出題対象</legend>
+            <div class="chips" id="modeGroup">
+              <label class="radio-chip"><input type="radio" name="studyMode" value="all" checked> すべて</label>
+              <label class="radio-chip"><input type="radio" name="studyMode" value="wrong"> 要復習</label>
+              <label class="radio-chip"><input type="radio" name="studyMode" value="starred"> お気に入り</label>
+            </div>
+          </fieldset>
+          <label class="toggle-row"><input type="checkbox" id="randomOrder" checked> 順序をランダムにする</label>
+          <p id="matchedCount" class="matched-count">問題を読み込んでいます…</p>
+          <button id="startBtn" class="btn primary" type="button" disabled>演習を始める <span aria-hidden="true">→</span></button>
+        </section>
+
+        <section class="panel manage" aria-labelledby="manageTitle">
+          <div class="section-title"><h2 id="manageTitle">データ管理</h2></div>
+          <div class="offline-row"><span aria-hidden="true">↓</span><div><strong>オフライン学習</strong><p id="offlineMessage">確認中です…</p></div></div>
+          <div class="actions">
+            <button id="prepareOfflineBtn" class="btn secondary" type="button">オフライン用データを準備</button>
+            <button id="refreshBtn" class="btn secondary" type="button">最新版を読み込み</button>
+          </div>
+          <hr>
+          <p class="help">学習履歴は、この端末のブラウザ内に保存されます。定期的にバックアップしてください。</p>
+          <div class="actions">
+            <button id="exportBtn" class="btn secondary" type="button">履歴をバックアップ</button>
+            <label class="btn secondary upload-label">履歴を復元<input type="file" id="restoreInput" accept=".json,application/json" hidden></label>
+          </div>
+          <button id="eraseBtn" class="text-button" type="button">この端末の学習履歴を削除</button>
+        </section>
+        <p class="footnote">問題はWindowsで questions.csv を編集して追加します。初期収録の問題は動作確認用のオリジナル例題です。</p>
+      </section>
+
+      <section id="studyView" class="view" hidden>
+        <div class="study-head">
+          <button class="back-button" id="quitBtn" type="button">← 演習を終了</button>
+          <span class="counter" id="questionCounter">1 / 10</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="演習の進捗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div id="progressFill"></div></div>
+        <article class="panel question-panel">
+          <div class="question-top"><div class="question-meta" id="questionMeta"></div><button id="starBtn" type="button" class="star-button" aria-label="お気に入りに登録">☆</button></div>
+          <h2 id="questionTitle">問題</h2>
+          <p class="question-text" id="questionText"></p>
+          <img id="questionImage" class="question-image" alt="設問の参考図" hidden>
+          <div id="choices" class="choices" role="group" aria-label="解答選択肢"></div>
+          <div id="answerPanel" class="answer-panel" hidden aria-live="polite">
+            <strong id="answerResult"></strong><p id="answerExplanation"></p>
+          </div>
+          <button id="nextBtn" class="btn primary" type="button" hidden>次の問題へ →</button>
+        </article>
+      </section>
+
+      <section id="resultView" class="view" hidden>
+        <div class="panel finish">
+          <div class="finish-mark" aria-hidden="true">✓</div>
+          <p class="eyebrow">SESSION FINISHED</p>
+          <h1>演習が終了しました</h1>
+          <p class="result-number"><span id="resultCorrect">0</span><span class="muted"> / </span><span id="resultTotal">10</span><small> 正解</small></p>
+          <p id="resultComment" class="help"></p>
+          <button id="returnBtn" class="btn primary" type="button">ホームへ戻る</button>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">過去問ノート · 個人利用版</footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

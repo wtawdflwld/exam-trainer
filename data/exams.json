@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "exams": [
+    {
+      "id": "denko1",
+      "name": "第一種電気工事士",
+      "csv": "data/denko1.csv",
+      "years": {},
+      "sessions": {
+        "AM": {
+          "label": "午前",
+          "order": 10
+        },
+        "PM": {
+          "label": "午後",
+          "order": 20
+        },
+        "FIRST": {
+          "label": "上期",
+          "order": 10
+        },
+        "SECOND": {
+          "label": "下期",
+          "order": 20
+        }
+      }
+    },
+    {
+      "id": "denko2",
+      "name": "第二種電気工事士",
+      "csv": "data/denko2.csv",
+      "years": {},
+      "sessions": {
+        "FIRST": {
+          "label": "上期",
+          "order": 10
+        },
+        "SECOND": {
+          "label": "下期",
+          "order": 20
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "personal-exam-pwa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/prepare-pages.mjs",
+    "start": "node scripts/serve.mjs . 8000"
+  },
+  "engines": {
+    "node": ">=20.11"
+  }
+}

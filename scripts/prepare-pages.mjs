@@ -1,0 +1,10 @@
+import {spawnSync} from 'node:child_process';
+import {cp,readdir,readFile,mkdir} from 'node:fs/promises';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const result=spawnSync(process.execPath,[path.join(root,'scripts/build.mjs')],{cwd:root,stdio:'inherit'});
+if(result.status!==0)process.exit(result.status||1);
+const dist=path.join(root,'dist');
+for(const name of await readdir(dist))await cp(path.join(dist,name),path.join(root,name),{recursive:true,force:true});
+const release=JSON.parse(await readFile(path.join(root,'app-release.json'),'utf8'));
+console.log(`Pages root prepared: ${release.version}. Commit the changed files to main. Existing Pages main / settings can stay unchanged.`);

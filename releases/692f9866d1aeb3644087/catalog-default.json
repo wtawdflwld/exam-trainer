@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "exams": [
+    {
+      "id": "denko1",
+      "name": "第一種電気工事士",
+      "csv": {
+        "path": "data/denko1.csv",
+        "sha256": "94e457822b8266818164bc90b8cc74ee7f4bda83ea35cd81327e67c5c2347d04"
+      },
+      "years": {},
+      "sessions": {
+        "AM": {
+          "label": "午前",
+          "order": 10
+        },
+        "PM": {
+          "label": "午後",
+          "order": 20
+        },
+        "FIRST": {
+          "label": "上期",
+          "order": 10
+        },
+        "SECOND": {
+          "label": "下期",
+          "order": 20
+        }
+      },
+      "images": [],
+      "count": 0,
+      "version": "9964d114d8c0fd409dad511ea9f3e9c7463404f88a7dbafa6bb53f32bca12eb2"
+    },
+    {
+      "id": "denko2",
+      "name": "第二種電気工事士",
+      "csv": {
+        "path": "data/denko2.csv",
+        "sha256": "94e457822b8266818164bc90b8cc74ee7f4bda83ea35cd81327e67c5c2347d04"
+      },
+      "years": {},
+      "sessions": {
+        "FIRST": {
+          "label": "上期",
+          "order": 10
+        },
+        "SECOND": {
+          "label": "下期",
+          "order": 20
+        }
+      },
+      "images": [],
+      "count": 0,
+      "version": "3a8f1146e16264369be931975ff395e70ebeb7c6522079e88ed0f7e662d6680c"
+    }
+  ]
+}
